@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.BlogTypeMapper">
+
+    <resultMap type="com.blog.entity.BlogType" id="BlogTypeResult">
+        <result property="id" column="id"/>
+        <result property="typeName" column="type_name"/>
+        <result property="blogCount" column="blog_count"/>
+        <result property="orderNo" column="order_no"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Integer" resultMap="BlogTypeResult">
+        select * from t_blogType where id=#{id}
+    </select>
+
+</mapper>

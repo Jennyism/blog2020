@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${pageTitle }"></title>
+    <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/css/blog.css">
+    <link href="/favicon.ico" rel="SHORTCUT ICON">
+    <script src="/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?aa5c701f4f646931bf78b6f40b234ef5";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <style type="text/css">
+        body {
+            padding-top: 10px;
+            padding-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div th:include="foreground/common/head.html"></div>
+
+    <div th:include="foreground/common/menu.html"></div>
+
+    <div class="row">
+        <div class="col-md-9">
+            <div th:include='${mainPage}'></div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img src="/static/images/user_icon.png"/>
+                    博主信息
+                </div>
+                <div class="user_image">
+                    <img th:src="@{'/static/userImages/'+${blogger.imageName }}" />
+                </div>
+                <div class="nickName" th:text="${blogger.nickName }"></div>
+                <div class="userSign" th:text="(${blogger.sign })"></div>
+            </div>
+
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img src="/static/images/byType_icon.png"/>
+                    按日志类别
+                </div>
+                <div class="datas">
+                    <ul>
+                        <li th:each="blogTypeCount:${blogTypeCountList}">
+                            <span><a th:href="@{'/index?typeId='+${blogTypeCount.id }}" th:text="${blogTypeCount.typeName }+'('+${blogTypeCount.blogCount }+')'"></a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img src="/static/images/byDate_icon.png"/>
+                    按日志日期
+                </div>
+                <div class="datas">
+                    <ul>
+                        <li th:each="blogCount:${blogCountList}">
+                            <span>
+                                <a th:href="@{'/index?releaseDateStr='+${blogCount.releaseDateStr }}" th:text="${blogCount.releaseDateStr }+'('+${blogCount.blogCount }+')'"></a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img src="/static/images/link_icon.png"/>
+                    友情链接
+                </div>
+                <div class="datas">
+                    <ul>
+                        <li th:each="link:${linkList}">
+                            <span>
+                                <a th:href="@{${link.linkUrl}}" target="_blank" th:text="${link.linkName }"></a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<div class="data_list" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="data_list_title">
+        <img src="/static/images/list_icon.png"/>
+        博客列表
+    </div>
+    <div class="datas">
+        <ul>
+            <li style="margin-bottom: 30px" th:each="blog:${blogPage.list}">
+					<span class="date">
+                        <a th:href="@{'/blog/articles/'+${blog.id}}"
+                           th:text="${#dates.format(blog.releaseDate, 'yyyy-MM-dd')}"></a>
+                    </span>
+                <span class=" title">
+						<a th:href="@{'/blog/articles/'+${blog.id}}" th:text="${blog.title }"></a>
+					</span>
+                <span class="summary" th:text="'摘要:'+${blog.summary }"></span>
+                <span class="img">
+					  		<a th:each="image:${blog.imagesList }" th:href="@{'/blog/articles/'+${blog.id}}"
+                               th:text="${image}"></a>
+                </span>
+                <span class="info"
+                      th:text="'发表于'+${#dates.format(blog.releaseDate, 'yyyy-MM-dd')}+'阅读('+${blog.clickHit}+') 评论('+${blog.replyHit}+')'"> </span>
+            </li>
+            <hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:  10px;"/>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <nav>
+        <ul class="pagination pagination-sm">
+            <!--
+                1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+                2.首页，末页的逻辑：pn=1访问第一次，pn=${blogPage.pages}访问最后一页
+              -->
+            <li>
+                <a href="/index?page=1">首页</a>
+            </li>
+            <!-- 如果还有前页就访问当前页码-1的页面， -->
+            <li th:if="${blogPage.hasPreviousPage}">
+                <a th:href="@{'/index?page='+${blogPage.pageNum-1}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+            <th:block th:each="page_Nums:${blogPage.navigatepageNums}">
+
+                <li class="active" th:if="${page_Nums==blogPage.pageNum}">
+                    <a href="#" th:text="${page_Nums}"></a>
+                </li>
+                <li th:if="${page_Nums!=blogPage.pageNum }">
+                    <a th:href="@{'/index?page='+${page_Nums}}" th:text="${page_Nums}"></a>
+                </li>
+            </th:block>
+            <!-- 如果还有后页就访问当前页码+1的页面， -->
+            <li th:if="${blogPage.hasNextPage}">
+                <a th:href="@{'/index?page='+${blogPage.pageNum+1}}" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li><a th:href="@{'/index?page='+${blogPage.pages}}">末页</a></li>
+        </ul>
+    </nav>
+</div>

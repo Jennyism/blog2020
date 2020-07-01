@@ -1,0 +1,28 @@
+
+<div class="data_list">
+		<div class="data_list_title">
+		<img src="/static/images/search_icon.png"/>
+			搜索&nbsp;<font color="red" th:text="${q}"></font>&nbsp;的结果 &nbsp;(总共搜索到&nbsp;<span th:text="${resultTotal}"></span>&nbsp;条记录) </div>
+		<div class="datas search">
+			<ul>
+				<div align="center" style="padding-top: 20px"
+				th:if="${blogList.size()==0}"
+				>
+					未查询到结果，请换个关键字试试看！
+				</div>
+				<th:block th:if="${blogList.size()>0}">
+					<li style="margin-bottom: 20px"
+						th:each="blog:${blogList}"
+					>
+						<span class="title"><a th:href="@{'/blog/articles/'+${blog.id}}" target="_blank" th:utext="${blog.title }"></a></span>
+						<span class="summary" th:utext="'摘要: '+${blog.content }+'...'"></span>
+						<span class="link"><a th:href="@{'/blog/articles/'+${blog.id}}"
+						th:text="'/blog/articles/'+${blog.id}"></a>
+							<span th:text="'发表于'+${blog.releaseDateStr}"></span>
+						</span>
+
+					</li>
+				</th:block>
+			</ul>
+		</div>
+   </div>
